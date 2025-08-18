@@ -34,6 +34,7 @@ import langchain
 from ragclient import RAGClient
 from typing import List
 from sentence_transformers import SentenceTransformer
+from custom_generate import generate_until_pattern
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 class Agent:
@@ -96,7 +97,7 @@ class HRManager(Agent):
         self.tokenizer = tokenizer
     def generate(self,prompt):
         inputs = self.tokenizer(prompt,return_tensors = 'pt').to(self.model.device)
-        outputs = model.generate(
+        outputs = self.model.generate(
             **inputs,
             pad_token_id = self.tokenizer.eos_token_id,
             do_sample = False,
@@ -112,7 +113,7 @@ class MathExpert(Agent):
     def generate(self,prompt):
         prompt = self.prompt_template(prompt)
         inputs = self.tokenizer(prompt,return_tensors = 'pt').to(self.model.device)
-        outputs = model.generate(
+        outputs = self.model.generate(
             **inputs,
             pad_token_id = self.tokenizer.eos_token_id,
             do_sample = False,

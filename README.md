@@ -16,11 +16,11 @@
 
 - **database.py**: initializes rag client using PATHWAY.
 
-- **rag_server.py**: initializes a pathway vectorserver.
+- **rag_server.py**: initializes a pathway vector server.
 
 - **rag_client.py**: client for pathway vector server.
 
-- **hr_database.txt**: databse for HR manager.
+- **hr_database.txt**: database for HR manager.
 
 - **llm_ui.py**: streamlitt front of our UI application.
 
@@ -30,10 +30,10 @@
 
 - **query_decomposer.py**: contains code for breaking complex multi-hop queries to simple single-hop sub-queries.
 
-- **sandbox.py**: contains code for code guardrailing using sandboxing.
+- **sandbox.py**: contains code for code guard railing using sand boxing.
 
 - **variables.py**: fill your API keys here.
 
 - **wrapper.py**: combines all of our codebase into a single pipeline.
 
-- **cache**: cache for loading huggingface models.
+- **cache**: cache for loading huggingface models.a

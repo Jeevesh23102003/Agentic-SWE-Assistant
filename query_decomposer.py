@@ -34,6 +34,7 @@ import langchain
 from ragclient import RAGClient
 from typing import List
 from sentence_transformers import SentenceTransformer
+from custom_generate import generate_until_pattern
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 class QueryDecomposer:
