@@ -46,34 +46,39 @@ from memory import *
 from prompts import *
 from query_decomposer import *
 
-model_save_path = '/workspace/HF_model/'
-bnb_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_quant_type="nf4",
-            bnb_4bit_compute_dtype=torch.float16,
-            bnb_4bit_use_double_quant=True
-        )
-model = AutoModelForCausalLM.from_pretrained(
-            "mistralai/Mistral-7B-Instruct-v0.3",
-            device_map="auto",
-            trust_remote_code=True,
-            use_auth_token=True,
-            quantization_config=bnb_config,
-            cache_dir=model_save_path
-        ).to(device)
-tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-Instruct-v0.3", use_auth_token=True)
-encoder = AutoModel.from_pretrained('google-bert/bert-base-uncased').to(device)
-enc_tokenizer = AutoTokenizer.from_pretrained('google-bert/bert-base-uncased')
-model_kwargs = {'device': device}
-encode_kwargs = {'normalize_embeddings': True}
-embedding_model = 'BAAI/bge-base-en-v1.5'
-embedder = HuggingFaceBgeEmbeddings(model_name=embedding_model,
-                         model_kwargs = model_kwargs,
-                         encode_kwargs=encode_kwargs,
-                         query_instruction="")
+def load_models():
+    model_save_path = '/workspace/HF_model/'
+    bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_use_double_quant=True
+            )
+    model = AutoModelForCausalLM.from_pretrained(
+                "mistralai/Mistral-7B-Instruct-v0.3",
+                device_map="auto",
+                trust_remote_code=True,
+                use_auth_token=True,
+                quantization_config=bnb_config,
+                cache_dir=model_save_path
+            ).to(device)
+    tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-Instruct-v0.3", use_auth_token=True)
+    encoder = AutoModel.from_pretrained('google-bert/bert-base-uncased').to(device)
+    enc_tokenizer = AutoTokenizer.from_pretrained('google-bert/bert-base-uncased')
+    model_kwargs = {'device': device}
+    encode_kwargs = {'normalize_embeddings': True}
+    embedding_model = 'BAAI/bge-base-en-v1.5'
+    embedder = HuggingFaceBgeEmbeddings(model_name=embedding_model,
+                            model_kwargs = model_kwargs,
+                            encode_kwargs=encode_kwargs,
+                            query_instruction="")
+    
+    return model, tokenizer, encoder, enc_tokenizer, embedder
 
-def main():
-    query = "Create a Python script for an embedded temperature monitoring system that reads sensor data from a simulated I2C temperature sensor. The system should continuously monitor temperature readings, calculate a running average over the last 5 readings, and trigger an alert if the temperature exceeds a configurable threshold. The script should include error handling for sensor communication failures and implement a basic logging system. Use the smbus2 library for I2C communication simulation."
+def main(query : str):
+
+    model, tokenizer, encoder, enc_tokenizer, embedder = load_models()
+    
     decomposer = QueryDecomposer(model,tokenizer,prompt_template)
     coder_agent = CodeGenerator(model, tokenizer,prompt_template_coder_agent, correction_prompt_coder_agent, pattern_correction_coder_agent)
     doc_agent = DocumentationGenerator(model, tokenizer, prompt_template_doc, pattern_correction_prompt_template_doc)
@@ -147,6 +152,6 @@ Maintain compliance with labor laws and organizational policies.''', 'hr_manager
             short_memory.add_query_text(f"Query:{sub_query}\nAnswer:\n{outputs}")
     return outputs
 
-if __name__=="__main__":
-    print(main())
+# if __name__=="__main__":
+#     print(main())
     

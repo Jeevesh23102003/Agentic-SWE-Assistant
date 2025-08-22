@@ -1,39 +1,31 @@
 # FILE STRUCTURE
 
-- **agent.py**: contains all agents.
+- **agent.py**: It contains all the agents and their codes.
 
-- **agent_store.py**: contains code for the agent selection process.
+- **agent_store.py**: Contains code for the agent selection process.
 
-- **commands.sh**: basic shell commands to setup the environment to run our application.
-
-- **Requirements.txt**: contains all dependencies needed to be installed.
+- **Requirements.txt**: Contains all dependencies needed to be installed.
   
-- **custom_generate.py**: contains code for a custom generate function required at many places in our codebase.
+- **custom_generate.py**: Contains code for a custom generate function required at many places in our codebase.
   
-- **filter.py**: contains code for the tasks of context filtering.
+- **filter.py**: Contains code for the tasks of context filtering.
 
-- **complexity_evaluator.py**: contains code for evaluating the complexity of a query and determining the class in which this query belongs.
+- **complexity_evaluator.py**: Contains code for evaluating the complexity of a query and determining the class in which this query belongs.
 
-- **database.py**: initializes rag client using PATHWAY.
+- **database.py**: Initializes rag client using PATHWAY.
 
-- **rag_server.py**: initializes a pathway vector server.
+- **rag_server.py**: Initializes a pathway vector server.
 
-- **rag_client.py**: client for pathway vector server.
+- **rag_client.py**: Client for pathway vector server.
 
-- **hr_database.txt**: database for HR manager.
+- **app.py**: Streamlitt front of our UI application.
 
-- **llm_ui.py**: streamlitt front of our UI application.
+- **memory.py**: Contains code for short and core memory.
 
-- **memory.py**: contains code for short and core memory.
+- **prompts.py**: Contains all prompt templates required.
 
-- **prompts.py**: contains all prompt templates required.
+- **query_decomposer.py**: Contains code for breaking complex multi-hop queries to simple single-hop sub-queries.
 
-- **query_decomposer.py**: contains code for breaking complex multi-hop queries to simple single-hop sub-queries.
+- **variables.py**: Fill your API keys here.
 
-- **sandbox.py**: contains code for code guard railing using sand boxing.
-
-- **variables.py**: fill your API keys here.
-
-- **wrapper.py**: combines all of our codebase into a single pipeline.
-
-- **cache**: cache for loading huggingface models.a
+- **main.py**: It contains the main code in which all the other classes and functions are called for the required project purpose.
