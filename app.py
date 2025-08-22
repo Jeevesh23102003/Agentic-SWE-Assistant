@@ -161,7 +161,6 @@ if prompt := st.chat_input("What is up?"):
     
     with st.chat_message("user"):
         st.markdown(prompt)
-    simulated_response = f"This is a simulated response to: {prompt}"
     
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
@@ -172,6 +171,7 @@ if prompt := st.chat_input("What is up?"):
         st.markdown(response)
 
     st.session_state.messages.append({"role": "assistant", "content": response})
+
 
 # Disclaimer
 st.markdown("""
